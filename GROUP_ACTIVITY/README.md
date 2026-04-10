@@ -4,7 +4,26 @@ Comprehensive test suite for the **Employee Manager** application using three co
 
 ---
 
-## Architecture
+## Agent Orchestration Architecture
+
+```mermaid
+flowchart TD
+    O([test-orchestrator.agent.md]) --> P([playwright-tester.agent.md])
+    O --> B([backend-tester.agent.md])
+    O --> D([bdd-tester.agent.md])
+    P -->|loads| PS([playwright-testing/SKILL.md\nSelectors · Helpers · Pitfalls])
+    B -->|loads| BS([backend-testing/SKILL.md\nEndpoints · Schemas · Checklist])
+    D -->|loads| DS([bdd-testing/SKILL.md\nStep Catalogue · Tags · Conventions])
+    PS --> E2E([Playwright E2E\n34 tests])
+    BS --> API([Jest + Supertest\n27 tests])
+    DS --> BDD([Cucumber BDD\n25 scenarios])
+    E2E & API & BDD --> CI([GitHub Actions\nPhase 1 → Phase 2 → Phase 3])
+    CI --> Pages([gauravkhuraana.github.io/ActivityAI/group/])
+```
+
+---
+
+## Folder Structure
 
 ```
 GROUP_ACTIVITY/
@@ -157,8 +176,23 @@ Every test suite clears the database before each test via `DELETE /employees/:id
 
 Tests run automatically via GitHub Actions on every push and pull request to `main`.
 
+Three phases run sequentially (fail-fast strategy):
+1. **Backend API** — fastest, confirms APIs work before spinning up browsers
+2. **BDD Scenarios** — validates business behaviour
+3. **Playwright E2E** — full browser, runs last
+
 The Playwright HTML report is **published to GitHub Pages** after each run — accessible even when tests fail.
 
 See [`.github/workflows/group-activity.yml`](../.github/workflows/group-activity.yml).
+
+---
+
+## Live Reports
+
+| Activity | URL |
+|----------|-----|
+| Landing page | [gauravkhuraana.github.io/ActivityAI/](https://gauravkhuraana.github.io/ActivityAI/) |
+| SOLO report | [gauravkhuraana.github.io/ActivityAI/solo/](https://gauravkhuraana.github.io/ActivityAI/solo/) |
+| GROUP report | [gauravkhuraana.github.io/ActivityAI/group/](https://gauravkhuraana.github.io/ActivityAI/group/) |
 
 > **One-time setup:** Go to *Settings → Pages → Source → GitHub Actions* in your repository.

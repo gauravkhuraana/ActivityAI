@@ -6,6 +6,24 @@ End-to-end test automation coverage for the **Employee Manager** full-stack appl
 
 ---
 
+## Agentic Workflow Architecture
+
+```mermaid
+flowchart TD
+    A([playwright-tester.agent.md\nAI Agent]) -->|loads domain knowledge| B([SKILL.md\nSelectors · Helpers · Pitfalls])
+    B --> C{AI-Driven\nTest Generation}
+    C --> D[auth.spec.js\n20 tests]
+    C --> E[employee-crud.spec.js\n10 tests]
+    C --> F[employee-list.spec.js\n7 tests]
+    C --> G[navigation.spec.js\n8 tests]
+    D & E & F & G --> H([45 Tests\n100% Pass Rate])
+    H --> I([GitHub Actions CI\ntriggered on every push])
+    I --> J([Playwright HTML Report])
+    J --> K([gauravkhuraana.github.io/ActivityAI/solo/])
+```
+
+---
+
 ## App Under Test
 
 | Layer    | Technology                                |
@@ -102,11 +120,11 @@ Seeds two employees before each test to exercise client-side filtering across al
 
 | Spec File             | Tests |
 |-----------------------|------:|
-| auth.spec.js          | 17    |
+| auth.spec.js          | 20    |
 | employee-crud.spec.js | 10    |
 | employee-list.spec.js | 7     |
 | navigation.spec.js    | 8     |
-| **Total**             | **42**|
+| **Total**             | **45**|
 
 ---
 
@@ -129,4 +147,13 @@ It defines the app's selectors, API endpoints, auth patterns, reusable helpers, 
 | **API seeding over UI setup** | Each test seeds and clears its own data via `POST /employees`. Prevents inter-test contamination. |
 | **Scoped dialog selectors** | Delete confirmation button uses `dialog.getByRole(...)` to avoid matching the row-level Delete button. |
 | **Full UI login always** | `localStorage` shortcuts are avoided so the auth flow itself is continuously validated. |
-| **No theme / snackbar tests** | Deliberately excluded — timing-sensitive, adds flakiness, not business-critical. |
+| **Text assertion over count** | MUI empty state always renders a `<TableRow>` — `toHaveCount(0)` always fails; assert `getByText('No employees found.')` instead. |
+| **No theme / color tests** | Deliberately excluded — asserting `getComputedStyle` pixel values is fragile and environment-dependent. |
+
+---
+
+## Live Report
+
+Tests run automatically on every push via GitHub Actions. The Playwright HTML report is published to:
+
+**[https://gauravkhuraana.github.io/ActivityAI/solo/](https://gauravkhuraana.github.io/ActivityAI/solo/)**
