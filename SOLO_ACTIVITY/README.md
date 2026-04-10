@@ -10,14 +10,14 @@ End-to-end test automation coverage for the **Employee Manager** full-stack appl
 
 ```mermaid
 flowchart TD
-    A([playwright-tester.agent.md\nAI Agent]) -->|loads domain knowledge| B([SKILL.md\nSelectors · Helpers · Pitfalls])
-    B --> C{AI-Driven\nTest Generation}
-    C --> D[auth.spec.js\n20 tests]
-    C --> E[employee-crud.spec.js\n10 tests]
-    C --> F[employee-list.spec.js\n7 tests]
-    C --> G[navigation.spec.js\n8 tests]
-    D & E & F & G --> H([45 Tests\n100% Pass Rate])
-    H --> I([GitHub Actions CI\ntriggered on every push])
+    A([playwright-tester.agent.md]) -->|loads domain knowledge| B([SKILL.md - Selectors, Helpers, Pitfalls])
+    B --> C{AI-Driven Test Generation}
+    C --> D[auth.spec.js - 20 tests]
+    C --> E[employee-crud.spec.js - 10 tests]
+    C --> F[employee-list.spec.js - 7 tests]
+    C --> G[navigation.spec.js - 8 tests]
+    D & E & F & G --> H([45 Tests - 100% Pass Rate])
+    H --> I([GitHub Actions CI - every push])
     I --> J([Playwright HTML Report])
     J --> K([gauravkhuraana.github.io/ActivityAI/solo/])
 ```
