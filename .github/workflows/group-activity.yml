@@ -3,17 +3,9 @@ name: Group Activity — Tests & Pages
 on:
   push:
     branches: [main]
-    paths:
-      - 'GROUP_ACTIVITY/**'
-      - 'backend/**'
-      - 'frontend/**'
-      - '.github/workflows/group-activity.yml'
   pull_request:
     branches: [main]
-    paths:
-      - 'GROUP_ACTIVITY/**'
-      - 'backend/**'
-      - 'frontend/**'
+  workflow_dispatch:
 
 # Allow only one concurrent deployment per branch
 concurrency:
