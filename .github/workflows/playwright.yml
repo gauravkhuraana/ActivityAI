@@ -1,4 +1,4 @@
-name: Playwright E2E Tests
+name: Solo Activity — E2E Tests
 
 on:
   push:
@@ -9,16 +9,10 @@ on:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: pages
-  cancel-in-progress: false
 
 jobs:
   test:
-    name: Run E2E Tests
+    name: Run Solo E2E Tests
     runs-on: ubuntu-latest
 
     steps:
@@ -28,7 +22,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: '20'
 
       - name: Install backend dependencies
         working-directory: backend
@@ -69,31 +63,6 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: playwright-report
+          name: solo-playwright-report
           path: SOLO_ACTIVITY/playwright-report/
           retention-days: 30
-
-      - name: Setup GitHub Pages
-        if: always()
-        uses: actions/configure-pages@v5
-
-      - name: Upload Pages artifact
-        if: always()
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: SOLO_ACTIVITY/playwright-report/
-
-  deploy:
-    name: Publish report to GitHub Pages
-    needs: test
-    runs-on: ubuntu-latest
-    if: always()
-
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
